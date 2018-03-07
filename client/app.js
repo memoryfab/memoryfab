@@ -1,6 +1,6 @@
 import React from 'react'
 
-import {Navbar} from './components'
+import {Navbar, Home} from './components'
 import Routes from './routes'
 
 
@@ -8,7 +8,8 @@ const App = () => {
   return (
     <div>
       <Navbar />
-      <Routes />
+     {/*<Routes />*/} 
+     <Home />
     </div>
   )
 }
