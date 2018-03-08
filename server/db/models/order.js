@@ -6,14 +6,10 @@ const db = require('../db')
 
 const Order = db.define('order', {
     orderNumber: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.INTEGER,// how to do 1-4000 range?
         allowNull: true
     },
-    orderDate: {
-        type: Sequelize.DATE,
-        allowNull: false,
-        defaultValue: Sequelize.NOW
-    },
+    //orderDate handled by PostgreSQL
     totalAmount: {
         type: Sequelize.DECIMAL(12,2),
         allowNull: false

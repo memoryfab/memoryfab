@@ -17,12 +17,7 @@ const Base = db.define('base', {
     description: {
         type: Sequelize.TEXT,
         allowNull: false
-    },
-    timeStamp: {  
-        type: Sequelize.DATE,
-        allowNull: false,
-        defaultValue: Sequelize.NOW  
-    }
+    }// timeStamp handled by PostgreSQL
     
 })
 
