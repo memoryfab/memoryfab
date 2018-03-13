@@ -3,6 +3,8 @@ const Order = require('./order')
 const OrderItem = require('./orderitem')
 const Base = require('./base')
 const Blob = require('./blob')
+const ClassType = require('./classtype')
+const Meta = require('./meta')
 
 /**
  * If we had any associations to make, this would be a great place to put them!
@@ -11,10 +13,13 @@ const Blob = require('./blob')
  *    BlogPost.belongsTo(User)
  */
 
- Order.hasMany(OrderItem);
- Base.hasMany(OrderItem);
- Base.hasMany(Order);
- Base.hasMany(Blob);
+ClassType.hasMany(Meta);
+ClassType.hasMany(Base);
+Base.belongsTo(ClassType);
+Order.hasMany(OrderItem);
+Base.hasMany(OrderItem);
+Base.hasMany(Order);
+Base.hasMany(Blob);
 
 /**
  * We'll export all of our models here, so that any time a module needs a model,
@@ -27,5 +32,7 @@ module.exports = {
   Order,
   OrderItem,
   Base,
-  Blob
+  Blob,
+  ClassType,
+  Meta
 }
