@@ -15,3 +15,9 @@ router.get('/', (req, res, next) => {
     .catch(next);
   })
 
+router.post('/', (req, res, next) => {
+    Base.create(req.body)
+      .then(car => res.json(car) )
+      .catch(next)
+  })
+
