@@ -96,7 +96,6 @@ const mapState = state => {
       },
       onSubmit(theCar, e) {
         e.preventDefault();
-        document.getElementById("carform").reset();
         theCar.views = 0;
         theCar.parentId = 0;
         let promisePostCar = () => {
@@ -117,8 +116,8 @@ const mapState = state => {
                 resolve();
             })
         }
-        promisePostCar().then(()=> promiseUpdateCar()).then(()=>promiseGetAllCars());
-       // document.getElementById("carform").reset();
+        promisePostCar().then(() => promiseUpdateCar()).then(() => promiseGetAllCars());
+        document.getElementById("carform").reset();
       }
     }
   }

@@ -7,7 +7,9 @@ import history from '../history'
 const GET_CARS = 'GET_CARS'
 const GET_PARTS = 'GET_PARTS'
 const UPDATE_CAR = 'UPDATE_CAR'
+const UPDATE_PART = 'UPDATE_PART'
 const POST_CAR = "POST_CAR";
+const POST_PART = "POST_PART";
 
 /**
  * INITIAL STATE
@@ -15,7 +17,8 @@ const POST_CAR = "POST_CAR";
 const initialState = {
     cars: [],
     parts: [],
-    newCar: {}
+    newCar: {},
+    newPart: {}
 }
 
 /**
@@ -24,7 +27,9 @@ const initialState = {
 const getCars = cars => ({type: GET_CARS, cars});
 const getParts = parts => ({type: GET_PARTS, parts});
 const postCar = newCar => ({ type: POST_CAR, newCar });
+const postPart = newPart => ({ type: POST_PART, newPart });
 export const updateCar = newCar => ({type: UPDATE_CAR, newCar});
+export const updatePart = newPart => ({type: UPDATE_PART, newPart});
 
 /**
  * THUNK CREATORS
@@ -59,6 +64,20 @@ export const updateCar = newCar => ({type: UPDATE_CAR, newCar});
           })
           .catch(err => console.error("Error", err));
       };
+    export const writePart = part => dispatch => {
+        axios
+          .post("/api/parts", {
+            description: part.description,
+            name: part.name,
+            classtypeId: 2,
+            parentId: part.parentId,
+            views: part.views
+          })
+          .then(() => {
+            dispatch(postPart(part));
+          })
+          .catch(err => console.error("Error", err));
+      };
 
 
 /**
@@ -71,11 +90,14 @@ export default function (state = initialState, action) {
     case GET_PARTS:
     return Object.assign({}, state, { parts: action.parts});
     case UPDATE_CAR:
-    return Object.assign({}, state, { updateCar: action.newCar});
-    case POST_CAR:{
-        console.log("new car is" ,action.newCar)
-        return Object.assign({}, state, {cars: state.cars.concat(action.newCar)});
-    }
+    return Object.assign({}, state, { newCar: action.newCar});
+    case UPDATE_PART:
+    return Object.assign({}, state, { newPart: action.newPart});
+    case POST_CAR:
+    return Object.assign({}, state, {cars: state.cars.concat(action.newCar)});
+    case POST_PART:
+    return Object.assign({}, state, {parts: state.parts.concat(action.newPart)});
+    
  
     default:
       return state
