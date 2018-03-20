@@ -26,7 +26,7 @@ async function seed () {
   // and store the result that the promise resolves to in a variable! This is nice!
   console.log(`seeded ${users.length} users`)
   console.log(`seeded successfully`)
-
+/*
   const classtypes = await Promise.all([
     ClassType.create({className: 'Car'}),
     ClassType.create({className: 'Parts'}),
@@ -35,7 +35,7 @@ async function seed () {
   ])
 
   console.log(`seeded ${classtypes.length} classtypes`)
-  console.log(`seeded successfully`)
+  console.log(`seeded successfully`)*/
 }
 
 // Execute the `seed` function
