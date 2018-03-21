@@ -55,7 +55,7 @@ export const updatePart = newPart => ({type: UPDATE_PART, newPart});
           .post("/api/cars", {
             description: car.description,
             name: car.name,
-            classtypeId: 1,
+            classtypeId: car.classtypeId,
             parentId: car.parentId,
             views: car.views
           })

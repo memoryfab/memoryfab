@@ -4,7 +4,8 @@ const db = require('../db')
 const ClassType = db.define('classtype', {
     className: {
         type: Sequelize.ENUM('Car', 'Parts', 'Show', 'Article'),
-        allowNull: false
+        allowNull: false,
+        unique: true
     }
 })
 

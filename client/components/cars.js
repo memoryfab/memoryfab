@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {logout, getAllCars, updateCar, writeCar} from '../store'
+import {logout, getAllCars, updateCar, writeCar, getAllClassTypes} from '../store'
 
 
 
@@ -13,6 +13,7 @@ export class Cars extends Component {
     
     componentDidMount() {
         this.props.getCars();
+        this.props.getClassTypes();
     }
     render () { 
         return (
@@ -28,7 +29,7 @@ export class Cars extends Component {
                 }
                  <form
                     onSubmit={e =>
-                    this.props.onSubmit(this.props.newCar, e)
+                    this.props.onSubmit(this.props.newCar, e, this.props.classTypes)
                     }
                     id="carform"
                  >
@@ -46,16 +47,16 @@ export class Cars extends Component {
                     onChange={e => this.props.onChange(this.props.newCar, e)}
                     value={this.props.newCar.description}
                     />
-                    <h3>Category</h3>
+                   {/*  <h3>Category</h3>
                     <select
                     name="category"
                     onChange={e => this.props.onChange(this.props.newCar, e)}
                     value={this.props.newCar.category}
                     >
-                    <option value="1">Car</option>
+                   <option value="1">Car</option>
                     <option value="2">Part</option>
-                    <option value="3">Other</option>
-                    </select>
+                <option value="3">Other</option>
+                    </select>*/}
                     <br />
                     <button type="Submit">Submit</button>
                 </form>
@@ -68,6 +69,7 @@ const mapState = state => {
     return {
       isLoggedIn: !!state.user.id,
       cars: state.base.cars,
+      classTypes: state.admin.classTypes,
       newCar: state.base.newCar
     }
   }
@@ -79,6 +81,9 @@ const mapState = state => {
       },
       getCars() {
         dispatch(getAllCars());
+      },
+      getClassTypes() {
+        dispatch(getAllClassTypes());
       },
       onChange(theCar, e) {
         const updatedCar = theCar;
@@ -94,8 +99,15 @@ const mapState = state => {
   
         dispatch(updateCar(updatedCar));
       },
-      onSubmit(theCar, e) {
+      onSubmit(theCar, e, theClassTypes) {
         e.preventDefault();
+        theCar.category = "Car"
+        //Find the classType with "Car" Enum and get it's id
+        theClassTypes.forEach(singleClass => {
+            if (singleClass.className === theCar.category){
+                theCar.classtypeId = singleClass.id
+            }
+        })
         theCar.views = 0;
         theCar.parentId = 0;
         let promisePostCar = () => {
