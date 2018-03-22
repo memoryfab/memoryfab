@@ -93,9 +93,9 @@ const mapState = state => {
         if (e.target.getAttribute("name") === "body") {
             updatedCar.description = e.target.value;
         }
-        if (e.target.getAttribute("name") === "category") {
+      /*  if (e.target.getAttribute("name") === "category") {
             updatedCar.category = e.target.value;
-        }
+        }*/
   
         dispatch(updateCar(updatedCar));
       },
@@ -110,25 +110,9 @@ const mapState = state => {
         })
         theCar.views = 0;
         theCar.parentId = 0;
-        let promisePostCar = () => {
-            return new Promise(function(resolve,reject){
-                dispatch(writeCar(theCar))
-                resolve();
-            })
-        }
-        let promiseUpdateCar = () => {
-            return new Promise(function(resolve,reject){
-                dispatch(updateCar({}))
-                resolve();
-            })
-        }
-        let promiseGetAllCars = () => {
-            return new Promise(function(resolve,reject){
-                dispatch(getAllCars())
-                resolve();
-            })
-        }
-        promisePostCar().then(() => promiseUpdateCar()).then(() => promiseGetAllCars());
+        dispatch(writeCar(theCar));
+        dispatch(updateCar({}));
+        dispatch(getAllCars());
         document.getElementById("carform").reset();
       }
     }

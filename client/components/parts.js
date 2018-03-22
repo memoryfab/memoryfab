@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {logout, getAllParts, updatePart, writePart} from '../store'
+import {logout, getAllParts, updatePart, writePart, getAllClassTypes} from '../store'
 
 
 
@@ -13,6 +13,7 @@ export class Parts extends Component {
     
     componentDidMount() {
         this.props.getParts();
+        this.props.getClassTypes();
     }
     render () { 
         return (
@@ -28,7 +29,7 @@ export class Parts extends Component {
                 }
                   <form
                     onSubmit={e =>
-                    this.props.onSubmit(this.props.newPart, e)
+                    this.props.onSubmit(this.props.newPart, e, this.props.classTypes)
                     }
                     id="partform"
                  >
@@ -46,7 +47,7 @@ export class Parts extends Component {
                     onChange={e => this.props.onChange(this.props.newPart, e)}
                     value={this.props.newPart.description}
                     />
-                    <h3>Category</h3>
+                    {/*<h3>Category</h3>
                     <select
                     name="category"
                     onChange={e => this.props.onChange(this.props.newPart, e)}
@@ -55,7 +56,7 @@ export class Parts extends Component {
                     <option value="1">Car</option>
                     <option value="2">Part</option>
                     <option value="3">Other</option>
-                    </select>
+                    </select>*/}
                     <br />
                     <button type="Submit">Submit</button>
                 </form>
@@ -68,6 +69,7 @@ const mapState = state => {
     return {
       isLoggedIn: !!state.user.id,
       parts: state.base.parts,
+      classTypes: state.admin.classTypes,
       newPart: state.base.newPart
     }
   }
@@ -80,6 +82,9 @@ const mapState = state => {
       getParts() {
         dispatch(getAllParts());
       },
+      getClassTypes() {
+        dispatch(getAllClassTypes());
+      },
       onChange(thePart, e) {
         const updatedPart = thePart;
         if (e.target.getAttribute("name") === "name") {
@@ -88,35 +93,27 @@ const mapState = state => {
         if (e.target.getAttribute("name") === "body") {
             updatedPart.description = e.target.value;
         }
-        if (e.target.getAttribute("name") === "category") {
+     /*   if (e.target.getAttribute("name") === "category") {
             updatedPart.category = e.target.value;
-        }
+        }*/
   
         dispatch(updatePart(updatedPart));
       },
-      onSubmit(thePart, e) {
+      onSubmit(thePart, e, theClassTypes) {
         e.preventDefault();
+        thePart.category = "Parts"
+        //Find the classType with "Parts" Enum and get it's id
+        theClassTypes.forEach(singleClass => {
+            if (singleClass.className === thePart.category){
+                thePart.classtypeId = singleClass.id
+            }
+        })
         thePart.views = 0;
         thePart.parentId = 0;
-        let promisePostPart = () => {
-            return new Promise(function(resolve,reject){
-                dispatch(writePart(thePart))
-                resolve();
-            })
-        }
-        let promiseUpdatePart = () => {
-            return new Promise(function(resolve,reject){
-                dispatch(updatePart({}))
-                resolve();
-            })
-        }
-        let promiseGetAllParts = () => {
-            return new Promise(function(resolve,reject){
-                dispatch(getAllParts())
-                resolve();
-            })
-        }
-        promisePostPart().then(() => promiseUpdatePart()).then(() => promiseGetAllParts());
+        dispatch(writePart(thePart));
+        dispatch(updatePart({}));
+        dispatch(getAllParts());
+       
         document.getElementById("partform").reset();
       }
     }

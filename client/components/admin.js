@@ -74,25 +74,10 @@ const mapState = state => {
       },
       onSubmit(theClassType, e) {
         e.preventDefault();
-        let promisePostClassType = () => {
-            return new Promise(function(resolve,reject){
-                dispatch(writeClassType(theClassType))
-                resolve();
-            })
-        }
-        let promiseUpdateClassType = () => {
-            return new Promise(function(resolve,reject){
-                dispatch(updateClassType({}))
-                resolve();
-            })
-        }
-        let promiseGetAllClassTypes = () => {
-            return new Promise(function(resolve,reject){
-                dispatch(getAllClassTypes())
-                resolve();
-            })
-        }
-        promisePostClassType().then(() => promiseUpdateClassType()).then(() => promiseGetAllClassTypes());
+        dispatch(writeClassType(theClassType))
+        dispatch(updateClassType({}))
+        dispatch(getAllClassTypes())
+        
         document.getElementById("classtypeform").reset();
       }
     }
