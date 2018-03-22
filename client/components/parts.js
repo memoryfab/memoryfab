@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {logout, getAllParts, updatePart, writePart, getAllClassTypes} from '../store'
+import {logout, getAllParts, updatePart, writePart, getAllClassTypes, postUpdateGetParts} from '../store'
 
 
 
@@ -110,10 +110,7 @@ const mapState = state => {
         })
         thePart.views = 0;
         thePart.parentId = 0;
-        dispatch(writePart(thePart));
-        dispatch(updatePart({}));
-        dispatch(getAllParts());
-       
+        dispatch(postUpdateGetParts(thePart))
         document.getElementById("partform").reset();
       }
     }

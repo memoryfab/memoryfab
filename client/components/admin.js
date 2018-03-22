@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {logout, getAllClassTypes, updateClassType, writeClassType} from '../store'
+import {logout, getAllClassTypes, updateClassType, writeClassType, postUpdateGetClassTypes} from '../store'
 
 
 
@@ -74,9 +74,10 @@ const mapState = state => {
       },
       onSubmit(theClassType, e) {
         e.preventDefault();
-        dispatch(writeClassType(theClassType))
+        /*dispatch(writeClassType(theClassType))
         dispatch(updateClassType({}))
-        dispatch(getAllClassTypes())
+        dispatch(getAllClassTypes())*/
+        dispatch(postUpdateGetClassTypes(theClassType))
         
         document.getElementById("classtypeform").reset();
       }

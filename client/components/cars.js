@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {logout, getAllCars, updateCar, writeCar, getAllClassTypes} from '../store'
+import {logout, getAllCars, updateCar, writeCar, getAllClassTypes, postUpdateGetCars} from '../store'
 
 
 
@@ -110,9 +110,10 @@ const mapState = state => {
         })
         theCar.views = 0;
         theCar.parentId = 0;
-        dispatch(writeCar(theCar));
+       /* dispatch(writeCar(theCar));
         dispatch(updateCar({}));
-        dispatch(getAllCars());
+        dispatch(getAllCars());*/
+        dispatch(postUpdateGetCars(theCar))
         document.getElementById("carform").reset();
       }
     }

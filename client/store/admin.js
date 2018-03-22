@@ -1,5 +1,6 @@
 import axios from 'axios'
 import history from '../history'
+import { updateCar } from './index';
 
 /**
  * ACTION TYPES
@@ -45,6 +46,27 @@ export const updateClassType = newClassType => ({type: UPDATE_CLASS_TYPE, newCla
           .catch(err => console.error("Error", err));
       };
 
+    export const postUpdateGetClassTypes = classType => dispatch => {  
+        axios
+        .post("/api/admin", {
+          className: classType.className
+        })
+        .then(() => {
+          dispatch(postClassType(classType));
+        })
+        .then(() => {
+            dispatch(updateClassType({}))
+        })
+        .then(() => {
+            axios
+            .get('/api/admin')
+            .then(res => res.data)
+            .then((toDispatchClassTypes) => {
+                dispatch(getClassTypes(toDispatchClassTypes));
+            });
+        })
+        .catch(err => console.error("Error", err));
+    }
 /**
  * REDUCER
  */

@@ -51,8 +51,9 @@ export const updatePart = newPart => ({type: UPDATE_PART, newPart});
         });
     };
     export const writeCar = car => dispatch => {
+        console.log("hello")
         axios
-          .post("/api/cars", {
+          .post('/api/cars', {
             description: car.description,
             name: car.name,
             classtypeId: car.classtypeId,
@@ -79,6 +80,57 @@ export const updatePart = newPart => ({type: UPDATE_PART, newPart});
           .catch(err => console.error("Error", err));
       };
 
+    export const postUpdateGetCars = car => dispatch => {
+        axios
+        .post('/api/cars', {
+          description: car.description,
+          name: car.name,
+          classtypeId: car.classtypeId,
+          parentId: car.parentId,
+          views: car.views
+        })
+        .then(() => {
+          dispatch(postCar(car));
+        })
+        .then(() => {
+            dispatch(updateCar({}))
+        })
+        .then(() => {
+            axios
+            .get('/api/cars')
+            .then(res => res.data)
+            .then((toDispatchCars) => {
+                dispatch(getCars(toDispatchCars));
+            });
+        })
+        .catch(err => console.error("Error", err));
+    }
+
+    export const postUpdateGetParts = part => dispatch => {
+        axios
+        .post("/api/parts", {
+          description: part.description,
+          name: part.name,
+          classtypeId: 2,
+          parentId: part.parentId,
+          views: part.views
+        })
+        .then(() => {
+          dispatch(postPart(part));
+        })
+        .then(() => {
+            dispatch(updatePart({}));
+        })
+        .then(() => {
+            axios
+            .get('/api/parts')
+            .then(res => res.data)
+            .then((toDispatchParts) => {
+                dispatch(getParts(toDispatchParts));
+            });
+        })
+        .catch(err => console.error("Error", err));
+    }
 
 /**
  * REDUCER
