@@ -70,7 +70,7 @@ export const updatePart = newPart => ({type: UPDATE_PART, newPart});
           .post("/api/parts", {
             description: part.description,
             name: part.name,
-            classtypeId: 2,
+            classtypeId: part.classtypeId,
             parentId: part.parentId,
             views: part.views
           })
@@ -111,7 +111,7 @@ export const updatePart = newPart => ({type: UPDATE_PART, newPart});
         .post("/api/parts", {
           description: part.description,
           name: part.name,
-          classtypeId: 2,
+          classtypeId: part.classtypeId,
           parentId: part.parentId,
           views: part.views
         })
