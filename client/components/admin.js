@@ -35,7 +35,7 @@ export class Admin extends Component {
                     onChange={e => this.props.onChange(this.props.newClassType, e)}
                     value={this.props.newClassType.className}
                     >
-                    <option value="Car">Car</option>
+                    <option selected value="Car">Car</option>
                     <option value="Parts">Parts</option>
                     <option value="Show">Show</option>
                     <option value="Article">Article</option>
@@ -77,6 +77,11 @@ const mapState = state => {
         /*dispatch(writeClassType(theClassType))
         dispatch(updateClassType({}))
         dispatch(getAllClassTypes())*/
+       
+        //Handle if default value is used.
+        if (!theClassType.className){
+            theClassType.className = 'Car'
+        }
         dispatch(postUpdateGetClassTypes(theClassType))
         
         document.getElementById("classtypeform").reset();

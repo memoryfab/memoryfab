@@ -50,7 +50,9 @@ export class Cars extends Component {
                 {this.props.cars && 
                 this.props.cars.map(car => (
                     car.id && (<div key={car.id} >
+                        <Link to={`/cars/${car.id}`}>
                         <h2> Car Model: {car.name} </h2>
+                        </Link>
                         <p> Description: {car.description} </p>
                         <h5> Views: {car.views} </h5>
                     </div>)
@@ -138,6 +140,7 @@ const mapState = state => {
       },
       onSubmit(theCar, e, theClassTypes, theFile) {
         e.preventDefault();
+        console.log(theFile)
         //Do something with theFile here
         theCar.category = "Car"
         //Find the classType with "Car" Enum and get it's id

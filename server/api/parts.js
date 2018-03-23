@@ -16,6 +16,21 @@ router.get('/', (req, res, next) => {
   })
 
 
+router.get('/:id', (req ,res ,next) => {
+  Base.findById(req.params.id, {
+      include: [{
+          model: ClassType,
+          where: {
+              className: 'Parts',
+          }
+      }]
+      })
+      .then(part => res.json(part))
+      .catch(next);
+})
+
+
+
 router.post('/', (req, res, next) => {
     Base.create(req.body)
       .then(part => res.json(part) )

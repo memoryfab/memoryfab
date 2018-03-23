@@ -21,7 +21,9 @@ export class Parts extends Component {
                 {this.props.parts && 
                 this.props.parts.map(part => (
                     <div key={part.id} >
-                        <h2> Part Model: {part.name} </h2>
+                        <Link to={`/parts/${part.id}`}>
+                            <h2> Part Model: {part.name} </h2>
+                        </Link>
                         <p> Description: {part.description} </p>
                         <h5> Views: {part.views} </h5>
                     </div>
